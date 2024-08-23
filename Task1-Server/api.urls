@@ -1,0 +1,17 @@
+login
+update jwt
+
+GET /trains/ () []Train{Name, StartTime, EndTime, Desc, Trainer{ID, Name}}
+POST /trains/ (TrainerJWT string, Train{Name, StartTime, Desc}) int 
+
+POST /trains/{id}/register (GamerJWT string)
+
+UPDATE /trains/{id}/start (GamerJWT string) 
+PUT /trains/{id}/iot (GamerID int, pulse int)
+
+GET /me/ (JWT string) Gamer/Trainer{...}
+POST /me/iot (jwt string, iot_id int, iot_password int) bool
+
+
+GET /gamers (TrainerJWT string) []Gamer{...}
++ POST, UPDATE, DELETE

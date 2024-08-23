@@ -1,0 +1,68 @@
+@startuml
+   
+package Models {
+    class User {
+        + String name 
+        + String email 
+        + String username 
+        + String password
+    }
+
+    class Gamer {
+        + String name 
+        + int age
+
+        + User user
+    }
+
+    class Trainer {
+        + String name 
+        + int age
+
+        + User user
+    }
+
+    User "1" -- "1" Gamer
+    User "1" -- "1" Trainer
+
+    class TrainSession {
+        + String name
+        + String description
+        + DateTime date
+        + int duration 
+        
+        + Trainer trainer
+    }
+
+    TrainSession "1" -- "0..*" Gamer
+    TrainSession "1" -- "1" Trainer
+
+    class GamerSessionInformation {
+        + DateTime time
+        + int heart_rate
+
+        + Gamer gamer
+        + TrainSession train_session
+    }
+
+
+    GamerSessionInformation "0..*" -- "1" Gamer
+}
+
+package ModelSerializers {}
+
+Gamer --> ModelSerializers.GamerSerializer
+Trainer --> ModelSerializers.TrainerSerializer
+TrainSession --> ModelSerializers.TrainSessionSerializer
+GamerSessionInformation --> ModelSerializers.GamerSessionInformationSerializer
+
+
+package Views {
+  ModelSerializers.TrainSession --> TrainsViewSet : with IsTrainerOrReadOnly, GET and POST
+   GamerIdSerializer --> AddGamerToTrain : POST 
+
+}
+
+
+
+@enduml
